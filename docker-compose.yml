@@ -1,0 +1,20 @@
+version: "3"
+services:
+ userver-rabbitmq:
+    container_name: "userver-rabbitmq"
+    image: "rabbitmq:3-management"
+    env_file:
+      - "./rabbitmq/.env"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - "./rabbitmq/data:/data"
+      - "./rabbitmq/conf.d:/etc/rabbitmq/conf.d"
+    expose:
+      - 15672
+
+networks:
+  default:
+    name: "nginx-proxy"
+    external: true
