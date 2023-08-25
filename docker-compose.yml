@@ -1,0 +1,35 @@
+version: '3'
+services:
+  userver-filemgr:
+    container_name: userver-filemgr
+    build:
+      context: filemgr
+      dockerfile: Dockerfile
+    volumes:
+      - ./filemgr:/code
+      - ./logs:/code/logs
+      - ./tmp:/tmp
+      - ./local:/storages/local
+    expose:
+      - 5000
+    env_file:
+      - ./filemgr/.env
+
+  userver-filemgr-qcluster:
+    container_name: userver-filemgr-qcluster
+    build:
+      context: filemgr
+      dockerfile: Dockerfile
+    volumes:
+      - ./filemgr:/code
+      - ./logs:/code/logs
+      - ./tmp:/tmp
+      - ./local:/storages/local
+    command: python manage.py qcluster
+    env_file:
+      - ./filemgr/.env
+
+networks:
+  default:
+    name: nginx-proxy
+    external: true

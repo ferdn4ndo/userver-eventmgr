@@ -1,0 +1,1751 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /storages/:
+    get:
+      operationId: listStorages
+      description: ''
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        type:
+                          enum:
+                          - AMAZON_S3
+                          - LOCAL
+                          nullable: true
+                        total_size:
+                          type: string
+                          readOnly: true
+                      required: []
+                  count:
+                    type: integer
+                    example: 123
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            nullable: true
+                      next:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            nullable: true
+                      previous:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            nullable: true
+          description: ''
+    post:
+      operationId: createStorage
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id001
+              properties:
+                type:
+                  enum:
+                  - AMAZON_S3
+                  - LOCAL
+                  nullable: true
+                credentials:
+                  type: object
+                  writeOnly: true
+              required:
+              - credentials
+          application/x-www-form-urlencoded:
+            schema: *id001
+          multipart/form-data:
+            schema: *id001
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  type:
+                    enum:
+                    - AMAZON_S3
+                    - LOCAL
+                    nullable: true
+                  total_size:
+                    type: string
+                    readOnly: true
+                required: []
+          description: ''
+  /storages/{id}/:
+    get:
+      operationId: retrieveStorage
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this storage.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  type:
+                    enum:
+                    - AMAZON_S3
+                    - LOCAL
+                    nullable: true
+                  total_size:
+                    type: string
+                    readOnly: true
+                required: []
+          description: ''
+    put:
+      operationId: updateStorage
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this storage.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id002
+              properties:
+                type:
+                  enum:
+                  - AMAZON_S3
+                  - LOCAL
+                  nullable: true
+                credentials:
+                  type: object
+                  writeOnly: true
+              required:
+              - credentials
+          application/x-www-form-urlencoded:
+            schema: *id002
+          multipart/form-data:
+            schema: *id002
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  type:
+                    enum:
+                    - AMAZON_S3
+                    - LOCAL
+                    nullable: true
+                  total_size:
+                    type: string
+                    readOnly: true
+                required: []
+          description: ''
+    patch:
+      operationId: partial_updateStorage
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this storage.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id003
+              properties:
+                type:
+                  enum:
+                  - AMAZON_S3
+                  - LOCAL
+                  nullable: true
+                credentials:
+                  type: object
+                  writeOnly: true
+          application/x-www-form-urlencoded:
+            schema: *id003
+          multipart/form-data:
+            schema: *id003
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  type:
+                    enum:
+                    - AMAZON_S3
+                    - LOCAL
+                    nullable: true
+                  total_size:
+                    type: string
+                    readOnly: true
+                required: []
+          description: ''
+    delete:
+      operationId: destroyStorage
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this storage.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /storages/{storage_id}/files/:
+    get:
+      operationId: listStorageFiles
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        signature_key:
+                          type: string
+                          readOnly: true
+                        owner:
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              readOnly: true
+                            username:
+                              type: string
+                              maxLength: 32
+                            system_name:
+                              type: string
+                              maxLength: 255
+                            is_admin:
+                              type: boolean
+                            is_active:
+                              type: boolean
+                            registered_at:
+                              type: string
+                              format: date-time
+                              readOnly: true
+                            last_activity_at:
+                              type: string
+                              format: date-time
+                            total_downloads:
+                              type: string
+                              readOnly: true
+                            total_uploads:
+                              type: string
+                              readOnly: true
+                          required:
+                          - username
+                          - system_name
+                          type: object
+                        status:
+                          type: string
+                          readOnly: true
+                        visibility:
+                          enum:
+                          - PUBLIC
+                          - SYSTEM
+                          - USER
+                        size:
+                          type: string
+                          readOnly: true
+                        hash:
+                          type: string
+                          readOnly: true
+                        type:
+                          properties:
+                            mime_type:
+                              type: string
+                              maxLength: 255
+                            generic_type:
+                              enum:
+                              - TEXT
+                              - FONT
+                              - CODE
+                              - EXECUTABLE
+                              - AUDIO
+                              - IMAGE
+                              - VIDEO
+                              - COMPRESSED
+                              - DOCUMENT
+                              - BINARY
+                              - OTHER
+                              nullable: true
+                            description:
+                              type: string
+                              nullable: true
+                              maxLength: 255
+                            extensions:
+                              type: string
+                              nullable: true
+                              maxLength: 255
+                          required:
+                          - mime_type
+                          type: object
+                          readOnly: true
+                        metadata:
+                          type: string
+                        origin:
+                          type: string
+                          readOnly: true
+                        original_path:
+                          type: string
+                          readOnly: true
+                        virtual_filepath:
+                          type: string
+                          nullable: true
+                          pattern: ^\/?([\w\.\_-]+\/)*[\w\.\_-]+$
+                          maxLength: 1024
+                        available:
+                          type: string
+                          readOnly: true
+                        excluded:
+                          type: string
+                          readOnly: true
+                        created_by:
+                          type: string
+                          nullable: true
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_by:
+                          type: string
+                          nullable: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                      required:
+                      - owner
+                  count:
+                    type: integer
+                    example: 123
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            nullable: true
+                      next:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            nullable: true
+                      previous:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            nullable: true
+          description: ''
+  /storages/{storage_id}/files/{id}/:
+    get:
+      operationId: retrieveStorageFile
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  signature_key:
+                    type: string
+                    readOnly: true
+                  owner:
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        readOnly: true
+                      username:
+                        type: string
+                        maxLength: 32
+                      system_name:
+                        type: string
+                        maxLength: 255
+                      is_admin:
+                        type: boolean
+                      is_active:
+                        type: boolean
+                      registered_at:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                      last_activity_at:
+                        type: string
+                        format: date-time
+                      total_downloads:
+                        type: string
+                        readOnly: true
+                      total_uploads:
+                        type: string
+                        readOnly: true
+                    required:
+                    - username
+                    - system_name
+                    type: object
+                  status:
+                    type: string
+                    readOnly: true
+                  visibility:
+                    enum:
+                    - PUBLIC
+                    - SYSTEM
+                    - USER
+                  size:
+                    type: string
+                    readOnly: true
+                  hash:
+                    type: string
+                    readOnly: true
+                  type:
+                    properties:
+                      mime_type:
+                        type: string
+                        maxLength: 255
+                      generic_type:
+                        enum:
+                        - TEXT
+                        - FONT
+                        - CODE
+                        - EXECUTABLE
+                        - AUDIO
+                        - IMAGE
+                        - VIDEO
+                        - COMPRESSED
+                        - DOCUMENT
+                        - BINARY
+                        - OTHER
+                        nullable: true
+                      description:
+                        type: string
+                        nullable: true
+                        maxLength: 255
+                      extensions:
+                        type: string
+                        nullable: true
+                        maxLength: 255
+                    required:
+                    - mime_type
+                    type: object
+                    readOnly: true
+                  metadata:
+                    type: string
+                  origin:
+                    type: string
+                    readOnly: true
+                  original_path:
+                    type: string
+                    readOnly: true
+                  virtual_filepath:
+                    type: string
+                    nullable: true
+                    pattern: ^\/?([\w\.\_-]+\/)*[\w\.\_-]+$
+                    maxLength: 1024
+                  available:
+                    type: string
+                    readOnly: true
+                  excluded:
+                    type: string
+                    readOnly: true
+                  created_by:
+                    type: string
+                    nullable: true
+                  created_at:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated_by:
+                    type: string
+                    nullable: true
+                  updated_at:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - owner
+          description: ''
+    put:
+      operationId: updateStorageFile
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id004
+              properties:
+                storage:
+                  type: string
+                  writeOnly: true
+                owner:
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      readOnly: true
+                    username:
+                      type: string
+                      maxLength: 32
+                    system_name:
+                      type: string
+                      maxLength: 255
+                    is_admin:
+                      type: boolean
+                    is_active:
+                      type: boolean
+                    registered_at:
+                      type: string
+                      format: date-time
+                      readOnly: true
+                    last_activity_at:
+                      type: string
+                      format: date-time
+                    total_downloads:
+                      type: string
+                      readOnly: true
+                    total_uploads:
+                      type: string
+                      readOnly: true
+                  required:
+                  - username
+                  - system_name
+                  type: object
+                visibility:
+                  enum:
+                  - PUBLIC
+                  - SYSTEM
+                  - USER
+                metadata:
+                  type: string
+                virtual_filepath:
+                  type: string
+                  nullable: true
+                  pattern: ^\/?([\w\.\_-]+\/)*[\w\.\_-]+$
+                  maxLength: 1024
+                created_by:
+                  type: string
+                  nullable: true
+                updated_by:
+                  type: string
+                  nullable: true
+              required:
+              - storage
+              - owner
+          application/x-www-form-urlencoded:
+            schema: *id004
+          multipart/form-data:
+            schema: *id004
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  signature_key:
+                    type: string
+                    readOnly: true
+                  owner:
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        readOnly: true
+                      username:
+                        type: string
+                        maxLength: 32
+                      system_name:
+                        type: string
+                        maxLength: 255
+                      is_admin:
+                        type: boolean
+                      is_active:
+                        type: boolean
+                      registered_at:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                      last_activity_at:
+                        type: string
+                        format: date-time
+                      total_downloads:
+                        type: string
+                        readOnly: true
+                      total_uploads:
+                        type: string
+                        readOnly: true
+                    required:
+                    - username
+                    - system_name
+                    type: object
+                  status:
+                    type: string
+                    readOnly: true
+                  visibility:
+                    enum:
+                    - PUBLIC
+                    - SYSTEM
+                    - USER
+                  size:
+                    type: string
+                    readOnly: true
+                  hash:
+                    type: string
+                    readOnly: true
+                  type:
+                    properties:
+                      mime_type:
+                        type: string
+                        maxLength: 255
+                      generic_type:
+                        enum:
+                        - TEXT
+                        - FONT
+                        - CODE
+                        - EXECUTABLE
+                        - AUDIO
+                        - IMAGE
+                        - VIDEO
+                        - COMPRESSED
+                        - DOCUMENT
+                        - BINARY
+                        - OTHER
+                        nullable: true
+                      description:
+                        type: string
+                        nullable: true
+                        maxLength: 255
+                      extensions:
+                        type: string
+                        nullable: true
+                        maxLength: 255
+                    required:
+                    - mime_type
+                    type: object
+                    readOnly: true
+                  metadata:
+                    type: string
+                  origin:
+                    type: string
+                    readOnly: true
+                  original_path:
+                    type: string
+                    readOnly: true
+                  virtual_filepath:
+                    type: string
+                    nullable: true
+                    pattern: ^\/?([\w\.\_-]+\/)*[\w\.\_-]+$
+                    maxLength: 1024
+                  available:
+                    type: string
+                    readOnly: true
+                  excluded:
+                    type: string
+                    readOnly: true
+                  created_by:
+                    type: string
+                    nullable: true
+                  created_at:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated_by:
+                    type: string
+                    nullable: true
+                  updated_at:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - owner
+          description: ''
+    patch:
+      operationId: partial_updateStorageFile
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id005
+              properties:
+                storage:
+                  type: string
+                  writeOnly: true
+                owner:
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      readOnly: true
+                    username:
+                      type: string
+                      maxLength: 32
+                    system_name:
+                      type: string
+                      maxLength: 255
+                    is_admin:
+                      type: boolean
+                    is_active:
+                      type: boolean
+                    registered_at:
+                      type: string
+                      format: date-time
+                      readOnly: true
+                    last_activity_at:
+                      type: string
+                      format: date-time
+                    total_downloads:
+                      type: string
+                      readOnly: true
+                    total_uploads:
+                      type: string
+                      readOnly: true
+                  required:
+                  - username
+                  - system_name
+                  type: object
+                visibility:
+                  enum:
+                  - PUBLIC
+                  - SYSTEM
+                  - USER
+                metadata:
+                  type: string
+                virtual_filepath:
+                  type: string
+                  nullable: true
+                  pattern: ^\/?([\w\.\_-]+\/)*[\w\.\_-]+$
+                  maxLength: 1024
+                created_by:
+                  type: string
+                  nullable: true
+                updated_by:
+                  type: string
+                  nullable: true
+          application/x-www-form-urlencoded:
+            schema: *id005
+          multipart/form-data:
+            schema: *id005
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  signature_key:
+                    type: string
+                    readOnly: true
+                  owner:
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        readOnly: true
+                      username:
+                        type: string
+                        maxLength: 32
+                      system_name:
+                        type: string
+                        maxLength: 255
+                      is_admin:
+                        type: boolean
+                      is_active:
+                        type: boolean
+                      registered_at:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                      last_activity_at:
+                        type: string
+                        format: date-time
+                      total_downloads:
+                        type: string
+                        readOnly: true
+                      total_uploads:
+                        type: string
+                        readOnly: true
+                    required:
+                    - username
+                    - system_name
+                    type: object
+                  status:
+                    type: string
+                    readOnly: true
+                  visibility:
+                    enum:
+                    - PUBLIC
+                    - SYSTEM
+                    - USER
+                  size:
+                    type: string
+                    readOnly: true
+                  hash:
+                    type: string
+                    readOnly: true
+                  type:
+                    properties:
+                      mime_type:
+                        type: string
+                        maxLength: 255
+                      generic_type:
+                        enum:
+                        - TEXT
+                        - FONT
+                        - CODE
+                        - EXECUTABLE
+                        - AUDIO
+                        - IMAGE
+                        - VIDEO
+                        - COMPRESSED
+                        - DOCUMENT
+                        - BINARY
+                        - OTHER
+                        nullable: true
+                      description:
+                        type: string
+                        nullable: true
+                        maxLength: 255
+                      extensions:
+                        type: string
+                        nullable: true
+                        maxLength: 255
+                    required:
+                    - mime_type
+                    type: object
+                    readOnly: true
+                  metadata:
+                    type: string
+                  origin:
+                    type: string
+                    readOnly: true
+                  original_path:
+                    type: string
+                    readOnly: true
+                  virtual_filepath:
+                    type: string
+                    nullable: true
+                    pattern: ^\/?([\w\.\_-]+\/)*[\w\.\_-]+$
+                    maxLength: 1024
+                  available:
+                    type: string
+                    readOnly: true
+                  excluded:
+                    type: string
+                    readOnly: true
+                  created_by:
+                    type: string
+                    nullable: true
+                  created_at:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated_by:
+                    type: string
+                    nullable: true
+                  updated_at:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - owner
+          description: ''
+    delete:
+      operationId: destroyStorageFile
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /storages/{storage_id}/files/{file_id}/download/:
+    get:
+      operationId: listStorageFileDownloads
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: file_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        created_at:
+                          type: string
+                          readOnly: true
+                        expires_at:
+                          type: string
+                          readOnly: true
+                        expired:
+                          type: string
+                          readOnly: true
+                        download_url:
+                          type: string
+                          readOnly: true
+                      required: []
+                  count:
+                    type: integer
+                    example: 123
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            nullable: true
+                      next:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            nullable: true
+                      previous:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            nullable: true
+          description: ''
+    post:
+      operationId: createStorageFileDownload
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: file_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id006
+              properties:
+                storage_file:
+                  type: string
+                  writeOnly: true
+                owner:
+                  type: string
+                  writeOnly: true
+              required:
+              - storage_file
+              - owner
+          application/x-www-form-urlencoded:
+            schema: *id006
+          multipart/form-data:
+            schema: *id006
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  created_at:
+                    type: string
+                    readOnly: true
+                  expires_at:
+                    type: string
+                    readOnly: true
+                  expired:
+                    type: string
+                    readOnly: true
+                  download_url:
+                    type: string
+                    readOnly: true
+                required: []
+          description: ''
+  /storages/{storage_id}/files/{file_id}/download/{id}/:
+    get:
+      operationId: retrieveStorageFileDownload
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: file_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  created_at:
+                    type: string
+                    readOnly: true
+                  expires_at:
+                    type: string
+                    readOnly: true
+                  expired:
+                    type: string
+                    readOnly: true
+                  download_url:
+                    type: string
+                    readOnly: true
+                required: []
+          description: ''
+  /storages/{storage_id}/trash/:
+    get:
+      operationId: listStorageTrashViewSets
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+  /storages/{storage_id}/trash/{id}/:
+    get:
+      operationId: retrieveStorageTrashViewSet
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+    delete:
+      operationId: destroyStorageTrashViewSet
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /storages/{storage_id}/images/:
+    get:
+      operationId: listStorageFileImageViewSets
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+  /storages/{storage_id}/images/{id}/:
+    get:
+      operationId: retrieveStorageFileImageViewSet
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  /storages/{storage_id}/images/{image_id}/download/:
+    get:
+      operationId: listStorageFileImageDownloadViewSets
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: image_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+    post:
+      operationId: createStorageFileImageDownloadViewSet
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: image_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  /storages/{storage_id}/images/{image_id}/download/{id}/:
+    get:
+      operationId: retrieveStorageFileImageDownloadViewSet
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: image_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  /storages/{storage_id}/users/:
+    get:
+      operationId: listStorageUsers
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        user:
+                          type: string
+                        may_write:
+                          type: boolean
+                        may_read:
+                          type: boolean
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        created_by:
+                          type: string
+                      required:
+                      - user
+                      - created_by
+                  count:
+                    type: integer
+                    example: 123
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            nullable: true
+                      next:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            nullable: true
+                      previous:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            nullable: true
+          description: ''
+    post:
+      operationId: createStorageUser
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id007
+              properties:
+                storage:
+                  type: string
+                  writeOnly: true
+                user:
+                  type: string
+                may_write:
+                  type: boolean
+                may_read:
+                  type: boolean
+                created_by:
+                  type: string
+              required:
+              - storage
+              - user
+              - created_by
+          application/x-www-form-urlencoded:
+            schema: *id007
+          multipart/form-data:
+            schema: *id007
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  user:
+                    type: string
+                  may_write:
+                    type: boolean
+                  may_read:
+                    type: boolean
+                  created_at:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  created_by:
+                    type: string
+                required:
+                - user
+                - created_by
+          description: ''
+  /storages/{storage_id}/users/{id}/:
+    get:
+      operationId: retrieveStorageUser
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  user:
+                    type: string
+                  may_write:
+                    type: boolean
+                  may_read:
+                    type: boolean
+                  created_at:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  created_by:
+                    type: string
+                required:
+                - user
+                - created_by
+          description: ''
+    put:
+      operationId: updateStorageUser
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id008
+              properties:
+                storage:
+                  type: string
+                  writeOnly: true
+                user:
+                  type: string
+                may_write:
+                  type: boolean
+                may_read:
+                  type: boolean
+                created_by:
+                  type: string
+              required:
+              - storage
+              - user
+              - created_by
+          application/x-www-form-urlencoded:
+            schema: *id008
+          multipart/form-data:
+            schema: *id008
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  user:
+                    type: string
+                  may_write:
+                    type: boolean
+                  may_read:
+                    type: boolean
+                  created_at:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  created_by:
+                    type: string
+                required:
+                - user
+                - created_by
+          description: ''
+    patch:
+      operationId: partial_updateStorageUser
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id009
+              properties:
+                storage:
+                  type: string
+                  writeOnly: true
+                user:
+                  type: string
+                may_write:
+                  type: boolean
+                may_read:
+                  type: boolean
+                created_by:
+                  type: string
+          application/x-www-form-urlencoded:
+            schema: *id009
+          multipart/form-data:
+            schema: *id009
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  user:
+                    type: string
+                  may_write:
+                    type: boolean
+                  may_read:
+                    type: boolean
+                  created_at:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  created_by:
+                    type: string
+                required:
+                - user
+                - created_by
+          description: ''
+    delete:
+      operationId: destroyStorageUser
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /storages/{storage_id}/upload-from-file/:
+    post:
+      operationId: createStorageFileUpload
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  /storages/{storage_id}/upload-from-url/:
+    post:
+      operationId: createStorageFileUploadUrl
+      description: ''
+      parameters:
+      - name: storage_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''

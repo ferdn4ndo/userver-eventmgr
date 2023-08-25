@@ -1,0 +1,6 @@
+from .generic_test_case import GenericTestCase
+from .generic_create_test_case import GenericCreateTestCases
+from .generic_destroy_test_case import GenericDestroyTestCase
+from .generic_list_test_case import GenericListTestCase
+from .generic_partial_update_test_case import GenericPartialUpdateTestCase
+from .generic_retrieve_test_case import GenericRetrieveTestCase

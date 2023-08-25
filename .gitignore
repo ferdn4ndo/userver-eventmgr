@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temp files
+tmp/*
+!tmp/.gitkeep
+
+# Log files
+logs/*
+!logs/.gitkeep
+!tmp/.gitkeep
+
+# Local Storage files
+local/*
+!local/.gitkeep
+
+# Static files
+filemgr/static/*
+!filemgr/static/.gitkeep
+
+# Environments
+.env
+venv/
+
+# IDE files
+.idea/

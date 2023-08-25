@@ -1,0 +1,665 @@
+# audio/aac
+- model: core.StorageFileMimeType
+  pk: 19c0784a-282a-44b0-893c-74a780a512ba
+  fields:
+    mime_type: audio/aac
+    generic_type: AUDIO
+    description: AAC audio
+    extensions: aac
+
+# application/x-abiword
+- model: core.StorageFileMimeType
+  pk: 96c73069-9177-47f5-bbc0-c6b96d7ac2fe
+  fields:
+    mime_type: application/x-abiword
+    generic_type: DOCUMENT
+    description: AbiWord document
+    extensions: abw
+
+# application/x-freearc
+- model: core.StorageFileMimeType
+  pk: 4fd056fc-cee2-41f6-8796-a0dc87afc804
+  fields:
+    mime_type: application/x-freearc
+    generic_type: COMPRESSED
+    description: Archive document (multiple files embedded)
+    extensions: arc
+
+# video/x-msvideo
+- model: core.StorageFileMimeType
+  pk: ea98f88e-59be-4964-871a-8ab7c63d91ea
+  fields:
+    mime_type: video/x-msvideo
+    generic_type: VIDEO
+    description: AVI (Audio Video Interleave)
+    extensions: avi
+
+# application/vnd.amazon.ebook
+- model: core.StorageFileMimeType
+  pk: b4a83aa6-c994-4c65-989b-7ce6ed58ec42
+  fields:
+    mime_type: application/vnd.amazon.ebook
+    generic_type: DOCUMENT
+    description: Amazon Kindle eBook format
+    extensions: azw
+
+# application/octet-stream
+- model: core.StorageFileMimeType
+  pk: 12d8d270-5a4b-4fc6-8fe6-43143533338f
+  fields:
+    mime_type: application/octet-stream
+    generic_type: BINARY
+    description: Any kind of binary data
+    extensions: bin
+
+# image/bmp
+- model: core.StorageFileMimeType
+  pk: 860e1161-30a6-4642-8e50-03b15ac3240c
+  fields:
+    mime_type: image/bmp
+    generic_type: IMAGE
+    description: Windows OS/2 Bitmap Graphics
+    extensions: bmp
+
+# application/x-bzip
+- model: core.StorageFileMimeType
+  pk: e45a08ee-f82b-4f61-aef3-00d81c61c1de
+  fields:
+    mime_type: application/x-bzip
+    generic_type: COMPRESSED
+    description: BZip archive
+    extensions: bz
+
+# application/x-bzip2
+- model: core.StorageFileMimeType
+  pk: 863338ef-ca91-469e-adf7-d528d83ca516
+  fields:
+    mime_type: application/x-bzip2
+    generic_type: COMPRESSED
+    description: BZip2 archive
+    extensions: bz2
+
+# application/x-csh
+- model: core.StorageFileMimeType
+  pk: 3cd75a05-d7e1-4db6-85d3-46d8eab895cd
+  fields:
+    mime_type: application/x-csh
+    generic_type: EXECUTABLE
+    description: C-Shell script
+    extensions: csh
+
+# text/css
+- model: core.StorageFileMimeType
+  pk: 7ce42a9f-4b7c-4d8a-96a6-bf03243b4d38
+  fields:
+    mime_type: text/css
+    generic_type: CODE
+    description: Cascading Style Sheets (CSS)
+    extensions: css
+
+# text/csv
+- model: core.StorageFileMimeType
+  pk: 5a42641c-6dda-41db-a138-86eb7f136d21
+  fields:
+    mime_type: text/csv
+    generic_type: TEXT
+    description: Comma-separated values (CSV)
+    extensions: csv
+
+# application/msword
+- model: core.StorageFileMimeType
+  pk: 78a0d030-6948-42a7-b69f-cb8019e5e941
+  fields:
+    mime_type: application/msword
+    generic_type: DOCUMENT
+    description: Microsoft Word
+    extensions: doc
+
+# application/vnd.openxmlformats-officedocument.wordprocessingml.document
+- model: core.StorageFileMimeType
+  pk: 56cd9f61-dcb6-45c6-9a03-30cd6cfcdf4f
+  fields:
+    mime_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+    generic_type: DOCUMENT
+    description: Microsoft Word (OpenXML)
+    extensions: docx
+
+# application/vnd.ms-fontobject
+- model: core.StorageFileMimeType
+  pk: cbd48574-92c1-4834-94e4-e6120eef159b
+  fields:
+    mime_type: application/vnd.ms-fontobject
+    generic_type: FONT
+    description: MS Embedded OpenType fonts
+    extensions: eot
+
+# application/epub+zip
+- model: core.StorageFileMimeType
+  pk: 2b08a737-139e-4f8d-a714-d4f5d2f2b581
+  fields:
+    mime_type: application/epub+zip
+    generic_type: DOCUMENT
+    description: Electronic publication (EPUB)
+    extensions: epub
+
+# application/gzip
+- model: core.StorageFileMimeType
+  pk: 698db617-c548-4074-a7f9-2a050b0566ce
+  fields:
+    mime_type: application/gzip
+    generic_type: COMPRESSED
+    description: GZip Compressed Archive
+    extensions: gz
+
+# image/gif
+- model: core.StorageFileMimeType
+  pk: 0e081002-510f-4a8d-bdfc-88e681581b75
+  fields:
+    mime_type: image/gif
+    generic_type: IMAGE
+    description: Graphics Interchange Format (GIF)
+    extensions: gif
+
+# text/html
+- model: core.StorageFileMimeType
+  pk: de8896ee-ab8f-4dff-97ca-ed59f1d9fc6a
+  fields:
+    mime_type: text/html
+    generic_type: CODE
+    description: HyperText Markup Language (HTML)
+    extensions: html,htm
+
+# image/vnd.microsoft.icon
+- model: core.StorageFileMimeType
+  pk: 6a584d7c-a333-4620-ab77-cc8be8545ed1
+  fields:
+    mime_type: image/vnd.microsoft.icon
+    generic_type: IMAGE
+    description: Icon format
+    extensions: ico
+
+# text/calendar
+- model: core.StorageFileMimeType
+  pk: 2c24705b-4a80-4cba-9299-8d798da23674
+  fields:
+    mime_type: text/calendar
+    generic_type: OTHER
+    description: iCalendar format
+    extensions: ics
+
+# application/java-archive
+- model: core.StorageFileMimeType
+  pk: 0566891b-051c-45b7-b471-2e5af5b4bf21
+  fields:
+    mime_type: application/java-archive
+    generic_type: EXECUTABLE
+    description: Java Archive (JAR)
+    extensions: jar
+
+# image/jpeg
+- model: core.StorageFileMimeType
+  pk: 7d8ae99b-8f02-4914-b735-2f78bd86aa46
+  fields:
+    mime_type: image/jpeg
+    generic_type: IMAGE
+    description: JPEG images
+    extensions: jpeg,jpg
+
+# JavaScript text/javascript
+- model: core.StorageFileMimeType
+  pk: 253db33c-0fdc-40a7-bee8-fecc2cb18b1d
+  fields:
+    mime_type: JavaScript text/javascript
+    generic_type: CODE
+    description: js
+    extensions:
+
+# application/json
+- model: core.StorageFileMimeType
+  pk: 994aad95-a87a-4092-a185-21c3f37ded5c
+  fields:
+    mime_type: application/json
+    generic_type: TEXT
+    description: JSON format
+    extensions: json
+
+# application/ld+json
+- model: core.StorageFileMimeType
+  pk: 91afd7e2-c4cb-4ada-af62-41b8c60c7bd4
+  fields:
+    mime_type: application/ld+json
+    generic_type: TEXT
+    description: JSON-LD format
+    extensions: jsonld
+
+# audio/midi
+- model: core.StorageFileMimeType
+  pk: 379ddfa1-ffda-47a9-af44-564a4acced00
+  fields:
+    mime_type: audio/midi
+    generic_type: AUDIO
+    description: Musical Instrument Digital Interface (MIDI)
+    extensions: mid,midi
+
+# audio/x-midi
+- model: core.StorageFileMimeType
+  pk: 005fb8c9-4316-4220-be41-a2d9edb43553
+  fields:
+    mime_type: audio/x-midi
+    generic_type: AUDIO
+    description: Musical Instrument Digital Interface (MIDI)
+    extensions: mid,midi
+
+# text/javascript
+- model: core.StorageFileMimeType
+  pk: 25650653-b718-4b86-ba5f-7fcfa1f081be
+  fields:
+    mime_type: text/javascript
+    generic_type: CODE
+    description: JavaScript module
+    extensions: mjs
+
+# audio/mpeg
+- model: core.StorageFileMimeType
+  pk: afe1f6d2-76bb-4c9c-8ae7-fb0c97c64004
+  fields:
+    mime_type: audio/mpeg
+    generic_type: AUDIO
+    description: MP3 audio
+    extensions: mp3
+
+# video/mpeg
+- model: core.StorageFileMimeType
+  pk: 94f252b5-6c0f-4fd2-a3ac-920a61d91937
+  fields:
+    mime_type: video/mpeg
+    generic_type: VIDEO
+    description: MPEG Video
+    extensions: mpeg
+
+# application/vnd.apple.installer+xml
+- model: core.StorageFileMimeType
+  pk: 40d37a1a-94cb-4d1e-b395-48f2226eaf31
+  fields:
+    mime_type: application/vnd.apple.installer+xml
+    generic_type: EXECUTABLE
+    description: Apple Installer Package
+    extensions: mpkg
+
+# application/vnd.oasis.opendocument.presentation
+- model: core.StorageFileMimeType
+  pk: ef4127d9-1ca2-4fb0-9483-aaff06edc3ca
+  fields:
+    mime_type: application/vnd.oasis.opendocument.presentation
+    generic_type: DOCUMENT
+    description: OpenDocument presentation document
+    extensions: odp
+
+# application/vnd.oasis.opendocument.spreadsheet
+- model: core.StorageFileMimeType
+  pk: 49ca39ce-3352-4035-93c5-25fc048d0d04
+  fields:
+    mime_type: application/vnd.oasis.opendocument.spreadsheet
+    generic_type: DOCUMENT
+    description: OpenDocument spreadsheet document
+    extensions: ods
+
+# application/vnd.oasis.opendocument.text
+- model: core.StorageFileMimeType
+  pk: 6787fbeb-615b-4de4-a499-366a371fa254
+  fields:
+    mime_type: application/vnd.oasis.opendocument.text
+    generic_type: DOCUMENT
+    description: OpenDocument text document
+    extensions: odt
+
+# audio/ogg
+- model: core.StorageFileMimeType
+  pk: 1520ace6-76dd-476f-bc4f-1c05c797c5be
+  fields:
+    mime_type: audio/ogg
+    generic_type: AUDIO
+    description: OGG audio
+    extensions: oga
+
+# video/ogg
+- model: core.StorageFileMimeType
+  pk: 0146a963-90df-49ef-9eab-39990d9da65d
+  fields:
+    mime_type: video/ogg
+    generic_type: VIDEO
+    description: OGG video
+    extensions: ogv
+
+# application/ogg
+- model: core.StorageFileMimeType
+  pk: 88b34087-35c3-4d1b-bb09-875f1924294e
+  fields:
+    mime_type: application/ogg
+    generic_type: OTHER
+    description: OGG
+    extensions: ogx
+
+# audio/opus
+- model: core.StorageFileMimeType
+  pk: 27604330-cc66-40d6-a3bb-a918aedd5e91
+  fields:
+    mime_type: audio/opus
+    generic_type: AUDIO
+    description: Opus audio
+    extensions: opus
+
+# font/otf
+- model: core.StorageFileMimeType
+  pk: 9ad61b12-d706-42c0-8b00-6316dca4dc93
+  fields:
+    mime_type: font/otf
+    generic_type: FONT
+    description: OpenType font
+    extensions: otf
+
+# image/png
+- model: core.StorageFileMimeType
+  pk: 29f13778-043f-45ef-b393-24c1918a895f
+  fields:
+    mime_type: image/png
+    generic_type: IMAGE
+    description: Portable Network Graphics
+    extensions: png
+
+# application/pdf
+- model: core.StorageFileMimeType
+  pk: 0f9d44d1-ffd8-4a2a-a4fc-be28a94996a2
+  fields:
+    mime_type: application/pdf
+    generic_type: DOCUMENT
+    description: Adobe Portable Document Format (PDF)
+    extensions: pdf
+
+# application/x-httpd-php
+- model: core.StorageFileMimeType
+  pk: 1866637b-28df-4380-94a4-94fc132de75a
+  fields:
+    mime_type: application/x-httpd-php
+    generic_type: CODE
+    description: Hypertext Preprocessor (Personal Home Page)
+    extensions: php
+
+# application/vnd.ms-powerpoint
+- model: core.StorageFileMimeType
+  pk: 8bc23844-fc83-43dc-b63c-8dda5c62200e
+  fields:
+    mime_type: application/vnd.ms-powerpoint
+    generic_type: DOCUMENT
+    description: Microsoft PowerPoint
+    extensions: ppt
+
+# application/vnd.openxmlformats-officedocument.presentationml.presentation
+- model: core.StorageFileMimeType
+  pk: e68a9e27-357a-47d4-8704-00b4d6389e72
+  fields:
+    mime_type: application/vnd.openxmlformats-officedocument.presentationml.presentation
+    generic_type: DOCUMENT
+    description: Microsoft PowerPoint (OpenXML)
+    extensions: pptx
+
+# application/vnd.rar
+- model: core.StorageFileMimeType
+  pk: f518124c-12a6-4df3-ba4c-eebbcaed632b
+  fields:
+    mime_type: application/vnd.rar
+    generic_type: COMPRESSED
+    description: RAR archive
+    extensions: rar
+
+# application/rtf
+- model: core.StorageFileMimeType
+  pk: 833601ad-90ce-4905-80d0-0b2ad4a254fa
+  fields:
+    mime_type: application/rtf
+    generic_type: DOCUMENT
+    description: Rich Text Format (RTF)
+    extensions: rtf
+
+# application/x-sh
+- model: core.StorageFileMimeType
+  pk: fbd61bbe-219f-4cf0-9320-14e60b32636a
+  fields:
+    mime_type: application/x-sh
+    generic_type: EXECUTABLE
+    description: Bourne shell script
+    extensions: sh
+
+# image/svg+xml
+- model: core.StorageFileMimeType
+  pk: 1abe6cbb-600a-4988-92cd-e72206f3caf2
+  fields:
+    mime_type: image/svg+xml
+    generic_type: IMAGE
+    description: Scalable Vector Graphics (SVG)
+    extensions: svg
+
+# application/x-shockwave-flash
+- model: core.StorageFileMimeType
+  pk: 5cf1bcc0-1632-4e75-bc43-9ddfa7ccb6ee
+  fields:
+    mime_type: application/x-shockwave-flash
+    generic_type: OTHER
+    description: Small web format (SWF) or Adobe Flash document
+    extensions: swf
+
+# application/x-tar
+- model: core.StorageFileMimeType
+  pk: 4537d965-c220-4ad5-9ba5-dc79cfe7c144
+  fields:
+    mime_type: application/x-tar
+    generic_type: COMPRESSED
+    description: Tape Archive (TAR)
+    extensions: tar
+
+# image/tiff
+- model: core.StorageFileMimeType
+  pk: 94253b11-1832-45ce-9984-aae633817844
+  fields:
+    mime_type: image/tiff
+    generic_type: IMAGE
+    description: Tagged Image File Format (TIFF)
+    extensions: tif,tiff
+
+# video/mp2t
+- model: core.StorageFileMimeType
+  pk: 8a88aadd-b61e-4af9-9b98-fc292799df43
+  fields:
+    mime_type: video/mp2t
+    generic_type: VIDEO
+    description: MPEG transport stream
+    extensions: ts
+
+# font/ttf
+- model: core.StorageFileMimeType
+  pk: 228d3da9-4e3b-47c9-8028-9b6b6693e898
+  fields:
+    mime_type: font/ttf
+    generic_type: FONT
+    description: TrueType Font
+    extensions: ttf
+
+# text/plain
+- model: core.StorageFileMimeType
+  pk: 86dc8d6f-867a-464e-883d-11054bdc3852
+  fields:
+    mime_type: text/plain
+    generic_type: TEXT
+    description: Text, (generally ASCII or ISO 8859-n)
+    extensions: txt
+
+# application/vnd.visio
+- model: core.StorageFileMimeType
+  pk: 1ac0a65d-1343-4c22-a53c-c86fd8edb3cd
+  fields:
+    mime_type: application/vnd.visio
+    generic_type: DOCUMENT
+    description: Microsoft Visio
+    extensions: vsd
+
+# audio/wav
+- model: core.StorageFileMimeType
+  pk: c9216e10-493a-427f-b023-7b368a04a529
+  fields:
+    mime_type: audio/wav
+    generic_type: AUDIO
+    description: Waveform Audio Format
+    extensions: wav
+
+# audio/webm
+- model: core.StorageFileMimeType
+  pk: 43049146-acd0-4d6f-a82e-793b429c84ea
+  fields:
+    mime_type: audio/webm
+    generic_type: AUDIO
+    description: WEBM audio
+    extensions: weba
+
+# video/webm
+- model: core.StorageFileMimeType
+  pk: 3977d7ff-8c61-4fff-9521-26c302e085b0
+  fields:
+    mime_type: video/webm
+    generic_type: VIDEO
+    description: WEBM video
+    extensions: webm
+
+# image/webp
+- model: core.StorageFileMimeType
+  pk: 95cc5721-08d1-46b9-818e-b30fd03f1211
+  fields:
+    mime_type: image/webp
+    generic_type: IMAGE
+    description: WEBP image
+    extensions: webp
+
+# font/woff
+- model: core.StorageFileMimeType
+  pk: bf277678-dca9-4b49-8d5d-8f9cf31a585e
+  fields:
+    mime_type: font/woff
+    generic_type: FONT
+    description: Web Open Font Format (WOFF)
+    extensions: woff
+
+# font/woff2
+- model: core.StorageFileMimeType
+  pk: dc5a0946-5dfb-4370-bcbf-e286777c3717
+  fields:
+    mime_type: font/woff2
+    generic_type: FONT
+    description: Web Open Font Format (WOFF)
+    extensions: woff2
+
+# application/xhtml+xml
+- model: core.StorageFileMimeType
+  pk: 62beba83-4fa3-4330-bfd3-fae5cb64bc5a
+  fields:
+    mime_type: application/xhtml+xml
+    generic_type: CODE
+    description: XHTML
+    extensions: xhtml
+
+# application/vnd.ms-excel
+- model: core.StorageFileMimeType
+  pk: 82e39113-be9a-4d16-b56f-acb8dc56c505
+  fields:
+    mime_type: application/vnd.ms-excel
+    generic_type: DOCUMENT
+    description: Microsoft Excel
+    extensions: xls
+
+# application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+- model: core.StorageFileMimeType
+  pk: a35993e3-110e-43f2-af16-7a6201f321c5
+  fields:
+    mime_type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+    generic_type: DOCUMENT
+    description: Microsoft Excel (OpenXML)
+    extensions: xlsx
+
+# application/vnd.mozilla.xul+xml
+- model: core.StorageFileMimeType
+  pk: 88b91331-5632-4f0f-a38d-76b5def79dab
+  fields:
+    mime_type: application/vnd.mozilla.xul+xml
+    generic_type: DOCUMENT
+    description: XUL
+    extensions: xul
+
+# application/zip
+- model: core.StorageFileMimeType
+  pk: 6893b92f-ae79-4157-b967-03ebcf64133d
+  fields:
+    mime_type: application/zip
+    generic_type: COMPRESSED
+    description: ZIP archive
+    extensions: zip
+
+# application/x-7z-compressed
+- model: core.StorageFileMimeType
+  pk: 284a82b9-b6b8-4e78-92eb-a094d199079a
+  fields:
+    mime_type: application/x-7z-compressed
+    generic_type: COMPRESSED
+    description: 7-zip archive
+    extensions: 7z
+
+# video/3gpp
+- model: core.StorageFileMimeType
+  pk: 49c32e42-1235-47ac-8612-924c216c8f0d
+  fields:
+    mime_type: video/3gpp
+    generic_type: VIDEO
+    description: 3GPP audio/video container
+    extensions: 3gp
+
+# audio/3gpp
+- model: core.StorageFileMimeType
+  pk: cff322ac-3863-4902-a7f0-382bd6151bc1
+  fields:
+    mime_type: audio/3gpp
+    generic_type: AUDIO
+    description: 3GPP audio container
+    extensions: 3gp
+
+# video/3gpp2
+- model: core.StorageFileMimeType
+  pk: 828054cf-c24b-4899-9dd9-628e8f1b72cc
+  fields:
+    mime_type: video/3gpp2
+    generic_type: VIDEO
+    description: 3GPP2 audio/video container
+    extensions: 3g2
+
+# audio/3gpp2
+- model: core.StorageFileMimeType
+  pk: abbf133f-4d66-40a3-8502-41c06d99d44f
+  fields:
+    mime_type: audio/3gpp2
+    generic_type: AUDIO
+    description: 3GPP2 audio container
+    extensions: 3g2
+
+# application/xml
+- model: core.StorageFileMimeType
+  pk: 66c55c95-61e9-41df-ba8c-95c838671212
+  fields:
+    mime_type: application/xml
+    generic_type: CODE
+    description: XML not readable from casual users (RFC 3023, section 3)
+    extensions: xml
+
+# application/xml
+- model: core.StorageFileMimeType
+  pk: c9b21aa6-f03d-4ee7-bbfd-28a1abcdf65d
+  fields:
+    mime_type: text/xml
+    generic_type: TEXT
+    description: XML readable from casual users (RFC 3023, section 3)
+    extensions: xml
