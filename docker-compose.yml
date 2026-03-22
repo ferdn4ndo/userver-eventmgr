@@ -2,7 +2,7 @@ version: "3"
 services:
  userver-rabbitmq:
     container_name: "userver-rabbitmq"
-    image: "rabbitmq:3-management"
+    image: "rabbitmq:4-management-alpine"
     env_file:
       - "./rabbitmq/.env"
     ports:
@@ -12,6 +12,7 @@ services:
       - "./rabbitmq/data:/data"
       - "./rabbitmq/conf.d:/etc/rabbitmq/conf.d"
     expose:
+      - 5672
       - 15672
 
 networks:
