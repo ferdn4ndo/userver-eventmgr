@@ -12,7 +12,6 @@ mosquitto/log/*
 
 # RabbitMQ data and log files
 rabbitmq/data/*
-rabbitmq/log/*
 
 # IDE files
 .idea
