@@ -1,9 +1,9 @@
 # Environment variables
-.env
-env
-venv
-temp
-tmp
+**/*.env
+**/env
+**/venv
+**/temp
+**/tmp
 
 # Mosquitto data and log files
 mosquitto/config/pwfile
