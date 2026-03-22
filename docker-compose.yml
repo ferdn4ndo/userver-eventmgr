@@ -12,9 +12,8 @@ services:
       - "/usr/sbin/mosquitto"
       - "-c"
       - "/mosquitto/config/mosquitto.conf"
-    ports:
-      - "1883:1883"
-      - "9001:9001"
+    # Published only on the Docker network for nginx-proxy (wss on 443) and peer containers (mqtt on 1883).
+    # Add host ports here if you need direct access during development, e.g. "1883:1883" or "9001:9001".
     volumes:
       - "./mosquitto/config:/mosquitto/config:rw"
       - "./mosquitto/data:/mosquitto/data:rw"
