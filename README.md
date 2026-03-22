@@ -1,2 +1,3 @@
 # userver-eventmgr
-Event management service based on RabbitMQ to run with the uServer stack.
+
+Event management service based on MQTT and RabbitMQ to run with the uServer stack.
