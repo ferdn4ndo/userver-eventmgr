@@ -2,7 +2,7 @@
 # Ensures MQTT users from setup-users.env exist in the pwfile (via in-container script).
 #
 # Usage: ./setup-mqtt-users.sh
-# Credentials: mosquitto/setup-users.env (mounted at /mosquitto/config/setup-users.env in the container)
+# Credentials: mosquitto/config/setup-users.env (path inside the container: /mosquitto/config/setup-users.env)
 
 set -euo pipefail
 
