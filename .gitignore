@@ -10,7 +10,7 @@ mosquitto/config/pwfile
 mosquitto/data/*
 mosquitto/log/*
 
-# RabbitMQ data and log files
+# RabbitMQ data files
 rabbitmq/data/*
 
 # IDE files
