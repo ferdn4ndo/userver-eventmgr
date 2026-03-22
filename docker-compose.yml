@@ -1,16 +1,40 @@
-version: "3"
 services:
- userver-rabbitmq:
+  userver-mosquitto:
+    container_name: "userver-mosquitto"
+    image: "eclipse-mosquitto:alpine"
+    restart: unless-stopped
+    env_file:
+      - "./mosquitto/.env"
+    entrypoint:
+      - "/bin/sh"
+      - "/mosquitto/init/container-entrypoint.sh"
+    command:
+      - "/usr/sbin/mosquitto"
+      - "-c"
+      - "/mosquitto/config/mosquitto.conf"
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - "./mosquitto/config:/mosquitto/config:rw"
+      - "./mosquitto/data:/mosquitto/data:rw"
+      - "./mosquitto/init:/mosquitto/init:ro"
+      - "./mosquitto/log:/mosquitto/log:rw"
+    expose:
+      - 1883
+      - 9001
+  userver-rabbitmq:
     container_name: "userver-rabbitmq"
     image: "rabbitmq:4-management-alpine"
+    restart: unless-stopped
     env_file:
       - "./rabbitmq/.env"
     ports:
       - "5672:5672"
       - "15672:15672"
     volumes:
-      - "./rabbitmq/data:/data"
-      - "./rabbitmq/conf.d:/etc/rabbitmq/conf.d"
+      - "./rabbitmq/data:/data:rw"
+      - "./rabbitmq/conf.d:/etc/rabbitmq/conf.d:rw"
     expose:
       - 5672
       - 15672

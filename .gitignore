@@ -1,7 +1,18 @@
+# Environment variables
 .env
 env
 venv
 temp
 tmp
 
-*.idea
+# Mosquitto data and log files
+mosquitto/config/pwfile
+mosquitto/data/*
+mosquitto/log/*
+
+# RabbitMQ data and log files
+rabbitmq/data/*
+rabbitmq/log/*
+
+# IDE files
+.idea
