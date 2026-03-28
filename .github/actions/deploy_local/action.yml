@@ -1,0 +1,66 @@
+########################################################################################
+# Composite action: bring up userver-eventmgr (Mosquitto + RabbitMQ) for CI / local   #
+#--------------------------------------------------------------------------------------#
+# Requires: actions/checkout on this repo beforehand.                                  #
+# Creates the external `nginx-proxy` network if missing, seeds .env from templates,    #
+# runs `docker compose up --wait`, then smoke-checks both services.                    #
+########################################################################################
+
+name: "Compose stack (eventmgr)"
+description: "Create nginx-proxy network, seed env from templates, start Mosquitto and RabbitMQ, verify health"
+
+inputs:
+  root-work-dir:
+    description: "Repository root (directory containing docker-compose.yml)."
+    required: false
+    default: "."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Seed environment files from templates
+      env:
+        ROOT_WORK_DIR: "${{ inputs.root-work-dir }}"
+      run: |
+        set -euo pipefail
+        cp "${ROOT_WORK_DIR}/mosquitto/.env.template" "${ROOT_WORK_DIR}/mosquitto/.env"
+        cp "${ROOT_WORK_DIR}/rabbitmq/.env.template" "${ROOT_WORK_DIR}/rabbitmq/.env"
+        # Mosquitto requires a non-empty pwfile when password_file is set; seed one throwaway CI user.
+        cp "${ROOT_WORK_DIR}/mosquitto/config/setup-users.env.template" "${ROOT_WORK_DIR}/mosquitto/config/setup-users.env"
+        printf '%s\n' 'ci-mqtt=github-actions-ci' >> "${ROOT_WORK_DIR}/mosquitto/config/setup-users.env"
+        echo "== mosquitto/.env (first lines) =="
+        head -n 5 "${ROOT_WORK_DIR}/mosquitto/.env"
+        echo "== rabbitmq/.env (first lines) =="
+        head -n 12 "${ROOT_WORK_DIR}/rabbitmq/.env"
+      shell: bash
+
+    - name: Ensure Docker network for compose
+      run: |
+        set -euo pipefail
+        if ! docker network inspect nginx-proxy >/dev/null 2>&1; then
+          docker network create nginx-proxy
+        fi
+      shell: bash
+
+    - name: Build and start stack
+      env:
+        ROOT_WORK_DIR: "${{ inputs.root-work-dir }}"
+      run: |
+        set -euo pipefail
+        cd "${ROOT_WORK_DIR}"
+        docker compose up --build --remove-orphans --detach --wait --wait-timeout 120
+        docker compose ps
+      shell: bash
+
+    - name: Smoke checks
+      run: |
+        set -euo pipefail
+        docker exec userver-rabbitmq rabbitmq-diagnostics -q ping
+        docker exec userver-mosquitto sh -c 'nc -z 127.0.0.1 1883 && nc -z 127.0.0.1 9001'
+        code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 http://127.0.0.1:15672/ || echo "000")
+        case "$code" in 200|302|401) echo "RabbitMQ management UI HTTP status: $code" ;; *)
+          echo "Unexpected HTTP status from management UI: $code"
+          exit 1
+          ;;
+        esac
+      shell: bash

@@ -1,0 +1,38 @@
+name: Create Release Assets
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: write
+
+jobs:
+  create-release-asset:
+    name: Create Release Assets
+    runs-on: ubuntu-latest
+    env:
+      ARCHIVE_NAME: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}
+    steps:
+      - name: Download release tarball
+        run: curl -sL "${{ github.event.release.tarball_url }}" -o upstream.tar.gz
+
+      - name: Build distributable archive
+        run: |
+          set -euo pipefail
+          mkdir -p "${ARCHIVE_NAME}"
+          tar -xzf upstream.tar.gz -C "${ARCHIVE_NAME}" --strip-components 1
+          rm -rf "${ARCHIVE_NAME}/.github"
+          tar -czf "${ARCHIVE_NAME}.tar.gz" "${ARCHIVE_NAME}"
+          sha256sum "${ARCHIVE_NAME}.tar.gz" > checksum.txt
+
+      - name: Upload assets to the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "${{ github.event.release.tag_name }}" \
+            "${ARCHIVE_NAME}.tar.gz" \
+            checksum.txt \
+            --clobber \
+            --repo "${{ github.repository }}"
