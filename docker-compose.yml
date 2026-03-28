@@ -24,6 +24,7 @@ services:
       - 9001
   userver-rabbitmq:
     container_name: "userver-rabbitmq"
+    hostname: rabbitmq
     image: "rabbitmq:4-management-alpine"
     restart: unless-stopped
     env_file:
