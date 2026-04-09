@@ -19,17 +19,19 @@ Docker Compose stack for **MQTT** (Eclipse Mosquitto) and **AMQP** (RabbitMQ), d
 
 Both services attach to the external network **`nginx-proxy`** so the proxy can discover them via container environment variables (for example `VIRTUAL_HOST_MULTIPORTS`).
 
-### Mosquitto
+### Mosquitto Service
 
 - **Native MQTT:** `userver-mosquitto:1883` from any container on the `nginx-proxy` network. Not published on the host unless you add a `ports:` mapping in `docker-compose.yml`.
 - **Web clients:** Connect with **MQTT over WebSockets**. TLS is terminated by nginx-proxy; the URL is typically `wss://<your-mqtt-host>/` on port **443**. The compose env maps the proxy to container port **9001** with `proto: http` so nginx can perform the WebSocket upgrade.
-- **Authentication:** `allow_anonymous` is off; users live in `mosquitto/config/pwfile`, managed with `mosquitto_passwd` (see [MQTT users](#mqtt-users)).
+- **Authentication:** `allow_anonymous` is off; credentials are stored in `mosquitto/config/pwfile`. Populate it via `setup-users.env` on startup, or with a single bootstrap user from `MOSQUITTO_USERNAME` / `MOSQUITTO_PASSWORD` in `mosquitto/.env` when `setup-users.env` is absent (see [MQTT users](#mqtt-users)).
+- **Logs:** `mosquitto.conf` uses `log_dest stdout`; use `docker logs userver-mosquitto`. The `mosquitto/log` bind mount remains for compatibility but is not used for the main log with the current config.
 
-### RabbitMQ
+### RabbitMQ Service
 
 - **AMQP clients:** `userver-rabbitmq:5672` on the Docker network, or **localhost:5672** when using the default compose `ports:` mapping.
 - **Management UI:** **http://localhost:15672** locally, or via nginx-proxy using the hostname you set in `VIRTUAL_HOST_MULTIPORTS` (TLS on 443 in production).
 - **Erlang node name:** The service sets `hostname: rabbitmq` so `RABBITMQ_NODENAME=rabbit@rabbitmq` resolves inside the container (required for `epmd`).
+- **Cluster name:** `rabbitmq/rabbitmq.conf` sets `cluster_name = deployment-$(DEPLOYMENT_ID)`. You must define **`DEPLOYMENT_ID`** in `rabbitmq/.env` (the template includes an example value).
 
 `VIRTUAL_HOST_MULTIPORTS` should only list **HTTP** upstreams for nginx-proxy. The template maps the **management plugin (15672)**; **5672 is not proxied** through nginx-proxy’s HTTP layer.
 
@@ -57,9 +59,18 @@ Both services attach to the external network **`nginx-proxy`** so the proxy can 
    cp rabbitmq/.env.template rabbitmq/.env
    ```
 
-   Edit `mosquitto/.env` and `rabbitmq/.env`. Set `VIRTUAL_HOST_MULTIPORTS` to hostnames that match your DNS and nginx-proxy certificates. See comments inside each template.
+   Edit `mosquitto/.env` and `rabbitmq/.env`. Important variables:
 
-3. **MQTT users** (optional but required for clients if you keep `password_file` enabled):
+   | File | Variables |
+   |------|-----------|
+   | `rabbitmq/.env` | `VIRTUAL_HOST_MULTIPORTS` (management UI behind nginx-proxy), **`DEPLOYMENT_ID`** (required; feeds `cluster_name` in `rabbitmq/rabbitmq.conf`), `RABBITMQ_DEFAULT_USER` / `RABBITMQ_DEFAULT_PASS`, `RABBITMQ_NODENAME`, etc. See `rabbitmq/.env.template`. |
+   | `mosquitto/.env` | `VIRTUAL_HOST_MULTIPORTS` (WebSocket listener for nginx-proxy), optional **`MOSQUITTO_USERNAME`** / **`MOSQUITTO_PASSWORD`** when you are not using `setup-users.env` (bootstrap single user). See `mosquitto/.env.template`. |
+
+   Set `VIRTUAL_HOST_MULTIPORTS` to hostnames that match your DNS and nginx-proxy certificates.
+
+3. **MQTT users** (`password_file` is always enabled in `mosquitto.conf`):
+
+   **Option A — multiple users (recommended):**
 
    ```bash
    cp mosquitto/config/setup-users.env.template mosquitto/config/setup-users.env
@@ -71,6 +82,8 @@ Both services attach to the external network **`nginx-proxy`** so the proxy can 
    ```bash
    ./mosquitto/init/setup-mqtt-users.sh
    ```
+
+   **Option B — single user, no `setup-users.env`:** leave `setup-users.env` out and set `MOSQUITTO_USERNAME` and `MOSQUITTO_PASSWORD` in `mosquitto/.env`. The entrypoint creates `pwfile` with that user on first start (defaults inside the script are `mqtt` / `password` if the variables are unset).
 
 4. **Start the stack:**
 
@@ -84,13 +97,13 @@ Both services attach to the external network **`nginx-proxy`** so the proxy can 
 
 ### RabbitMQ
 
-- Open the management UI at **http://localhost:15672** (default user/password are seeded from `rabbitmq/.env` via `RABBITMQ_DEFAULT_USER` / `RABBITMQ_DEFAULT_PASS` and `rabbitmq/rabbitmq.conf`).
+- Open the management UI at **http://localhost:15672** (default user/password are seeded from `rabbitmq/.env` via `RABBITMQ_DEFAULT_USER` / `RABBITMQ_DEFAULT_PASS` and `rabbitmq/rabbitmq.conf`; the broker cluster name is `deployment-<DEPLOYMENT_ID>` from the same file).
 - From another container on `nginx-proxy`, use connection string host **`userver-rabbitmq`**, port **5672**.
 
 ### Mosquitto
 
 - **From another container:** host `userver-mosquitto`, port **1883**, MQTT with TLS off (plain TCP on the overlay network).
-- **From a browser or PWA:** `wss://<mqtt-hostname>/` using MQTT over WebSockets, credentials from `setup-users.env`, with nginx-proxy in front.
+- **From a browser or PWA:** `wss://<mqtt-hostname>/` using MQTT over WebSockets, with credentials from the users in `setup-users.env` or from your `MOSQUITTO_USERNAME` / `MOSQUITTO_PASSWORD` bootstrap user, and nginx-proxy in front.
 - **From your workstation** (debugging): add host ports under `userver-mosquitto` in `docker-compose.yml`, for example `"1883:1883"` or `"9001:9001"`, then restart the stack.
 
 ### nginx-proxy
@@ -115,10 +128,11 @@ You can trigger **Validate stack** and **Codebase quality** manually via the **A
 
 | Path | Purpose |
 |------|---------|
-| `docker-compose.yml` | Service definitions, health checks, external `nginx-proxy` network. |
-| `mosquitto/config/mosquitto.conf` | Broker listeners and auth. |
+| `docker-compose.yml` | Service definitions, health checks, external `nginx-proxy` network; `env_file` points at `mosquitto/.env` and `rabbitmq/.env`. |
+| `mosquitto/.env.template`, `rabbitmq/.env.template` | Copy to `.env` per service; document `VIRTUAL_HOST_MULTIPORTS`, `DEPLOYMENT_ID`, Mosquitto bootstrap vars, etc. |
+| `mosquitto/config/mosquitto.conf` | Broker listeners, `password_file`, `log_dest stdout`. |
 | `mosquitto/init/` | Custom entrypoint and MQTT user bootstrap scripts. |
-| `rabbitmq/rabbitmq.conf`, `rabbitmq/conf.d/` | RabbitMQ configuration. |
+| `rabbitmq/rabbitmq.conf`, `rabbitmq/conf.d/` | RabbitMQ configuration (including `cluster_name` interpolation). |
 
 ---
 

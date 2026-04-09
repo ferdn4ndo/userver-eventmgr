@@ -18,7 +18,6 @@ services:
       - "./mosquitto/config:/mosquitto/config:rw"
       - "./mosquitto/data:/mosquitto/data:rw"
       - "./mosquitto/init:/mosquitto/init:ro"
-      - "./mosquitto/log:/mosquitto/log:rw"
     expose:
       - 1883
       - 9001
