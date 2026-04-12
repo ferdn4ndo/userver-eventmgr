@@ -31,7 +31,7 @@ Both services attach to the external network **`nginx-proxy`** so the proxy can 
 - **AMQP clients:** `userver-rabbitmq:5672` on the Docker network, or **localhost:5672** when using the default compose `ports:` mapping.
 - **Management UI:** **http://localhost:15672** locally, or via nginx-proxy using the hostname you set in `VIRTUAL_HOST_MULTIPORTS` (TLS on 443 in production).
 - **Erlang node name:** The service sets `hostname: rabbitmq` so `RABBITMQ_NODENAME=rabbit@rabbitmq` resolves inside the container (required for `epmd`).
-- **Cluster name:** `rabbitmq/rabbitmq.conf` sets `cluster_name = deployment-$(DEPLOYMENT_ID)`. You must define **`DEPLOYMENT_ID`** in `rabbitmq/.env` (the template includes an example value).
+- **Cluster name:** `rabbitmq/conf.d/05-env-interpolation.conf` sets `cluster_name = deployment-$(DEPLOYMENT_ID)`. You must define **`DEPLOYMENT_ID`** in `rabbitmq/.env` (the template includes an example value).
 
 `VIRTUAL_HOST_MULTIPORTS` should only list **HTTP** upstreams for nginx-proxy. The template maps the **management plugin (15672)**; **5672 is not proxied** through nginx-proxy’s HTTP layer.
 
@@ -63,7 +63,7 @@ Both services attach to the external network **`nginx-proxy`** so the proxy can 
 
    | File | Variables |
    |------|-----------|
-   | `rabbitmq/.env` | `VIRTUAL_HOST_MULTIPORTS` (management UI behind nginx-proxy), **`DEPLOYMENT_ID`** (required; feeds `cluster_name` in `rabbitmq/rabbitmq.conf`), `RABBITMQ_DEFAULT_USER` / `RABBITMQ_DEFAULT_PASS`, `RABBITMQ_NODENAME`, etc. See `rabbitmq/.env.template`. |
+   | `rabbitmq/.env` | `VIRTUAL_HOST_MULTIPORTS` (management UI behind nginx-proxy), **`DEPLOYMENT_ID`** (required; feeds `cluster_name` in `rabbitmq/conf.d/05-env-interpolation.conf`), `RABBITMQ_DEFAULT_USER` / `RABBITMQ_DEFAULT_PASS`, `RABBITMQ_NODENAME`, etc. See `rabbitmq/.env.template`. |
    | `mosquitto/.env` | `VIRTUAL_HOST_MULTIPORTS` (WebSocket listener for nginx-proxy), optional **`MOSQUITTO_USERNAME`** / **`MOSQUITTO_PASSWORD`** when you are not using `setup-users.env` (bootstrap single user). See `mosquitto/.env.template`. |
 
    Set `VIRTUAL_HOST_MULTIPORTS` to hostnames that match your DNS and nginx-proxy certificates.
@@ -97,7 +97,7 @@ Both services attach to the external network **`nginx-proxy`** so the proxy can 
 
 ### RabbitMQ
 
-- Open the management UI at **http://localhost:15672** (default user/password are seeded from `rabbitmq/.env` via `RABBITMQ_DEFAULT_USER` / `RABBITMQ_DEFAULT_PASS` and `rabbitmq/rabbitmq.conf`; the broker cluster name is `deployment-<DEPLOYMENT_ID>` from the same file).
+- Open the management UI at **http://localhost:15672** (default user/password are seeded from `rabbitmq/.env` via `RABBITMQ_DEFAULT_USER` / `RABBITMQ_DEFAULT_PASS` and `rabbitmq/conf.d/05-env-interpolation.conf`; the broker cluster name is `deployment-<DEPLOYMENT_ID>` from the same file).
 - From another container on `nginx-proxy`, use connection string host **`userver-rabbitmq`**, port **5672**.
 
 ### Mosquitto
@@ -132,7 +132,7 @@ You can trigger **Validate stack** and **Codebase quality** manually via the **A
 | `mosquitto/.env.template`, `rabbitmq/.env.template` | Copy to `.env` per service; document `VIRTUAL_HOST_MULTIPORTS`, `DEPLOYMENT_ID`, Mosquitto bootstrap vars, etc. |
 | `mosquitto/config/mosquitto.conf` | Broker listeners, `password_file`, `log_dest stdout`. |
 | `mosquitto/init/` | Custom entrypoint and MQTT user bootstrap scripts. |
-| `rabbitmq/rabbitmq.conf`, `rabbitmq/conf.d/` | RabbitMQ configuration (including `cluster_name` interpolation). |
+| `rabbitmq/conf.d/` | RabbitMQ configuration (including `cluster_name` and credential interpolation in `05-env-interpolation.conf`). |
 
 ---
 

@@ -38,7 +38,6 @@ services:
       - "5672:5672"
       - "15672:15672"
     volumes:
-      - "./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:rw"
       - "./rabbitmq/conf.d:/etc/rabbitmq/conf.d:rw"
       - "./rabbitmq/data:/data:rw"
     expose:
