@@ -35,6 +35,8 @@ Both services attach to the external network **`nginx-proxy`** so the proxy can 
 
 `VIRTUAL_HOST_MULTIPORTS` should only list **HTTP** upstreams for nginx-proxy. The template maps the **management plugin (15672)**; **5672 is not proxied** through nginx-proxy’s HTTP layer.
 
+**Production `wss://`:** The hostname in **`VIRTUAL_HOST_MULTIPORTS`** must be the same FQDN clients use (DNS + TLS SAN). Set **`LETSENCRYPT_HOST`** to that name for **acme-companion** (the **userver** deploy script sets it from **`USERVER_EVENTMGR_MQTT_HOSTNAME`.`USERVER_VIRTUAL_HOST`** or from **`USERVER_EVENTMGR_MQTT_WSS_HOST`** when defined). If that hostname is missing or nginx falls through to another app (Adminer, etc.), TLS may succeed but WebSocket upgrades will fail.
+
 ---
 
 ## Prerequisites
